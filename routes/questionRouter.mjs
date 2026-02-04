@@ -2,7 +2,6 @@ import { Router } from "express";
 import connectionPool from "../utils/db.mjs";
 import { validateQuestion } from "../middlewares/validateQuestion.mjs";
 import { validateSearchQuery } from "../middlewares/validateSearchQuery.mjs";
-import { validateCreateAnswer } from "../middlewares/validateCreateAnswer.mjs";
 
 const questionRouter = Router();
 
@@ -15,6 +14,7 @@ try{
   });
 }
 catch(error){
+    console.log(error)
     return res.status(500).json({
         message:"Unable to fetch questions."
     });
