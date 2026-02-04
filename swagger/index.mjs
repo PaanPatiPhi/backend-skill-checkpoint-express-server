@@ -14,7 +14,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: "https://backend-skill-checkpoint-express-se-five.vercel.app/",
+      url: "https://backend-skill-checkpoint-expr-git-3072d9-phis-projects-e10d8e3b.vercel.app/",
     },
   ],
 };
