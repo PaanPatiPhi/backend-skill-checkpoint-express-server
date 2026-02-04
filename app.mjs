@@ -1,39 +1,42 @@
 import express from "express";
 import swaggerUi from "swagger-ui-express";
-import { swaggerSpec } from "./swagger/index.mjs";
+import cors from "cors";
+import "dotenv/config";
 
+import { swaggerSpec } from "./swagger/index.mjs";
 
 import questionRouter from "./routes/questionRouter.mjs";
 import answerRouter from "./routes/answerRouter.mjs";
-import cors from "cors";
-import "dotenv/config";
 import voteAnswerRouter from "./routes/voteAnswerRouter.mjs";
 
 const app = express();
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.get("/swagger.json", (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  res.status(200).json(swaggerSpec);
-});
 
+// ✅ body parser มาก่อน
 app.use(express.json());
+
+// ✅ CORS
 app.use(
   cors({
     origin: [
-      "http://localhost:5173", 
+      "http://localhost:5173",
       "http://localhost:3000",
       "https://personal-blog-react-32p2.app",
     ],
-    methods:["GET","POST","PUT","PATCH","DELETE","OPTIONS"]
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   })
 );
 
-app.use("/questions", questionRouter);
-app.use("/questions", answerRouter);
-app.use("/answers", voteAnswerRouter)
+// ✅ Swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.get("/test", (req, res) => {
-  return res.json("Server API is working 🚀");
+app.get("/swagger.json", (req, res) => {
+  res.status(200).json(swaggerSpec);
 });
 
-export default app;
+// ✅ Routes จริง
+app.use("/questions", questionRouter);
+app.use("/questions", answerRouter);
+app.use("/answers", voteAnswerRouter);
+
+app.get("/test", (req, res) => {
+  res.json("S

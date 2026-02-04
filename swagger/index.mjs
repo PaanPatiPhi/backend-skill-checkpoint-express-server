@@ -1,13 +1,16 @@
-// swagger/index.mjs
 import swaggerJSDoc from "swagger-jsdoc";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// แปลง __dirname สำหรับ ESM
+// 👉 import schemas ให้ swagger โหลดจริง
+import "./schemas/answer.schema.js";
+import "./schemas/error.schema.js";
+import "./schemas/question.schema.js";
+import "./schemas/vote.schema.js";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Swagger base definition
 const swaggerDefinition = {
   openapi: "3.0.0",
   info: {
@@ -16,32 +19,17 @@ const swaggerDefinition = {
     description: "API documentation",
   },
   servers: [
-    {
-      url: "https://backend-skill-checkpoint-expr-git-3072d9-phis-projects-e10d8e3b.vercel.app",
-      description: "Production (Vercel main)",
-    },
-    {
-      url: "https://backend-skill-checkpoint-express-se-opal.vercel.app",
-      description: "Production (Vercel alt)",
-    },
-    {
-      url: "http://localhost:4000",
-      description: "Local development",
-    },
+    { url: "https://backend-skill-checkpoint-express-se-opal.vercel.app" },
+    { url: "http://localhost:4000" },
   ],
 };
 
-// swagger-jsdoc options
 const options = {
-  swaggerDefinition,
+  definition: swaggerDefinition, // ❗ ใช้ definition (ไม่ใช่ swaggerDefinition)
   apis: [
-    // ✅ Express routes ตัวจริง
-    path.join(__dirname, "../../routes/**/*.mjs"),
-
-    // ✅ Swagger path definitions
-    path.join(__dirname, "./paths/**/*.js"),
+    path.join(__dirname, "./paths/**/*.js"), // swagger paths
+    path.join(__dirname, "../routes/**/*.mjs"), // routes (ถ้ามี jsdoc)
   ],
 };
 
-// Export swagger spec
 export const swaggerSpec = swaggerJSDoc(options);
