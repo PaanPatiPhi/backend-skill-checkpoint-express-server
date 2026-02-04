@@ -35,17 +35,5 @@ app.use("/answers", voteAnswerRouter)
 app.get("/test", (req, res) => {
   return res.json("Server API is working 🚀");
 });
-/**
- * @swagger
- * /health:
- *   get:
- *     summary: Health check
- *     responses:
- *       200:
- *         description: Server is running
- */
-app.get("/health", (req, res) => {
-  res.json({ status: "ok" });
-});
 
 export default app;
