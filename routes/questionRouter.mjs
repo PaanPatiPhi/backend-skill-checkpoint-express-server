@@ -2,6 +2,7 @@ import { Router } from "express";
 import connectionPool from "../utils/db.mjs";
 import { validateQuestion } from "../middlewares/validateQuestion.mjs";
 import { validateSearchQuery } from "../middlewares/validateSearchQuery.mjs";
+import { validateVote } from "../middlewares/validateVote.mjs";
 
 const questionRouter = Router();
 
@@ -165,5 +166,35 @@ questionRouter.delete("/:questionId", async (req,res)=>{
         }
 });
 
+questionRouter.post("/:questionId/vote",[validateVote] ,async (req,res)=>{
+        try{
+        const questionIdFromClient = req.params.questionId;
+        const vote = req.body.vote;
+        const hasFound = await connectionPool.query(`select * from question_votes where question_id = $1`,[questionIdFromClient]);
+        if (!hasFound.rows[0]){
+            return res.status(404).json(
+                {message: "Question not found."}
+            );
+        }
+        console.log(vote)
+        await connectionPool.query(`
+            update question_votes
+            set vote = $2
+            where question_id = $1
+        `,
+        [questionIdFromClient,
+             vote]
+      );
+      return res.status(200).json(
+        {message: "Vote on the question has been recorded successfully."}
+      )
+    }
+    catch (error){
+        console.log(error)
+        return res.status(500).json(
+            {message: "Unable to vote question."}
+        )
+    }
+})
 
 export default questionRouter

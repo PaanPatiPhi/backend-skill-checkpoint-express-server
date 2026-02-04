@@ -51,19 +51,24 @@ Server will run at: http://localhost:4000
 
 ## API Endpoints
 Questions
-Method	Endpoint	                    Description
+Method	Endpoint	                      Description
 GET	    /questions	                    Get all questions
 GET	    /questions/:questionId	        Get a question by ID
-POST	/questions	                    Create a new question
+POST	  /questions	                    Create a new question
 PUT	    /questions/:questionId	        Update a question
 DELETE	/questions/:questionId	        Delete a question
-GET	    /questions/search	            Search questions by title or category
+GET	    /questions/search	              Search questions by title or category
+POST	  /questions/:questionId/vote	    Vote a question (agree / disagree)
 
 Answers
-Method	Endpoint	                    Description
-POST	/questions/:questionId/answers	Create an answer
+Method	Endpoint	                      Description
+POST	  /questions/:questionId/answers	Create an answer
 GET	    /questions/:questionId/answers	Get answers of a question
 DELETE	/questions/:questionId/answers	Delete all answers of a question
+
+Answer_Votes
+Method	Endpoint	                      Description
+POST	  /answers/:answerId/vote	        Vote an answer (agree / disagree)
 
 Validation
 Create Question
@@ -76,6 +81,7 @@ Create Answer
 content is required
 content must be a string
 content length must not exceed 300 characters
+vote must be 1 or -1
 Invalid requests will return:
 {
   "message": "Invalid request data."

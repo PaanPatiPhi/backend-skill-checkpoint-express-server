@@ -3,6 +3,7 @@ import questionRouter from "./routes/questionRouter.mjs";
 import answerRouter from "./routes/answerRouter.mjs";
 import cors from "cors";
 import "dotenv/config";
+import voteAnswerRouter from "./routes/voteAnswerRouter.mjs";
 
 const app = express();
 const port =process.env.PORT || 4000;
@@ -20,6 +21,7 @@ app.use(
 
 app.use("/questions", questionRouter);
 app.use("/questions", answerRouter);
+app.use("/answers", voteAnswerRouter)
 
 app.get("/test", (req, res) => {
   return res.json("Server API is working 🚀");
