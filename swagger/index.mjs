@@ -1,4 +1,9 @@
 import swaggerJSDoc from "swagger-jsdoc";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -9,16 +14,19 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: "http://localhost:4000",
+      url: "https://backend-skill-checkpoint-express-se-five.vercel.app/",
     },
   ],
 };
 
 const options = {
-  definition: swaggerDefinition, // 🔹 ใช้ definition (ชื่อใหม่ของ swagger-jsdoc)
+  swaggerDefinition,
   apis: [
-    "./routes/**/*.mjs",     // routes ทั้งหมด
-    "./swagger/**/*.js"      // schemas + paths
+    // ⭐ routes (ตัวจริง)
+    path.join(__dirname, "../routes/**/*.mjs"),
+
+    // ⭐ swagger paths ที่คุณแยกไว้
+    path.join(__dirname, "./paths/**/*.js"),
   ],
 };
 

@@ -1,7 +1,9 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/api-docs", "destination": "/api/index.mjs/api-docs" },
-    { "source": "/api-docs/:path*", "destination": "/api/index.mjs/api-docs/:path*" }
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.mjs"
+    }
   ]
 }

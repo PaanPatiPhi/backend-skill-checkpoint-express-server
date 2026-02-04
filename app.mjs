@@ -11,7 +11,11 @@ import voteAnswerRouter from "./routes/voteAnswerRouter.mjs";
 
 const app = express();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-const port =process.env.PORT || 4000;
+app.get("/swagger.json", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.status(200).json(swaggerSpec);
+});
+
 app.use(express.json());
 app.use(
   cors({
@@ -43,4 +47,5 @@ app.get("/test", (req, res) => {
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
+
 export default app;
