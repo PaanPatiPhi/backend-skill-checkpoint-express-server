@@ -1,14 +1,18 @@
 import { Router } from "express";
 import { validateCreateAnswer } from "../middlewares/validateCreateAnswer.mjs";
+import connectionPool from "../utils/db.mjs";
 
 const answerRouter = Router();
 
 answerRouter.post("/:questionId/answers",[validateCreateAnswer] ,async (req,res)=>{
+    console.log("hit1")
  try
     {
     const {content} = req.body;
     const questionIdFromClient = req.params.questionId;
+    console.log(questionIdFromClient)
     const hasFound = await connectionPool.query(`select * from questions where id = $1`,[questionIdFromClient]);
+    console.log(hasFound)
     if (!hasFound.rows[0]){
         return res.status(404).json(
         {message: "Question not found."}
@@ -25,6 +29,7 @@ answerRouter.post("/:questionId/answers",[validateCreateAnswer] ,async (req,res)
         {message: "Answer created successfully."}
     )}
     catch(error){
+        console.log(error)
         return res.status(500).json(
             {message: "Unable to create answers."}
         )

@@ -141,17 +141,24 @@ questionRouter.delete("/:questionId", async (req,res)=>{
                 {message: "Question not found."}
             );
         }
+
+        await connectionPool.query(
+            "delete from answers where question_id = $1",
+            [questionIdFromClient]
+        );
+
         await connectionPool.query(
             `
             delete from questions where id = $1
             `,
             [questionIdFromClient]
-        )
+        );
         return res.status(200).json(
             {  message: "Question post has been deleted successfully."}
         )
     }
         catch(error){
+            console.log(error)
             return res.status(500).json(
                 {message: "Unable to delete question."}
             )
