@@ -5,7 +5,6 @@ import connectionPool from "../utils/db.mjs";
 const answerRouter = Router();
 
 answerRouter.post("/:questionId/answers",[validateCreateAnswer] ,async (req,res)=>{
-    console.log("hit1")
  try
     {
     const {content} = req.body;

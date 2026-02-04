@@ -29,6 +29,7 @@ Users can create, view, search, update, and delete questions, as well as create 
 - Express.js
 - PostgreSQL
 - pg (node-postgres)
+- Swagger (OpenAPI 3.0)
 
 ---
 

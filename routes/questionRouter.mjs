@@ -4,8 +4,8 @@ import { validateQuestion } from "../middlewares/validateQuestion.mjs";
 import { validateSearchQuery } from "../middlewares/validateSearchQuery.mjs";
 import { validateVote } from "../middlewares/validateVote.mjs";
 
-const questionRouter = Router();
 
+const questionRouter = Router();
 
 questionRouter.get("/",async (req,res)=>{
 try{
