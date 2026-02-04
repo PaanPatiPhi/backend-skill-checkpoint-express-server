@@ -1,8 +1,15 @@
 {
   "version": 2,
-  "functions": {
-    "api/index.mjs": {
-      "runtime": "nodejs@18"
+  "builds": [
+    {
+      "src": "app.mjs",
+      "use": "@vercel/node"
     }
-  }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "app.mjs"
+    }
+  ]
 }
